@@ -9,7 +9,8 @@ Para hacer uso del cliente, basta con ejecutar `irb` en consola:
 ```ruby
 require_relative 'client'
 cli = SoloMira::Client.new
-puts cli.search_movie('Shrek')
+res = cli.search_movie('Shrek')
+JSON.parse(res)
 ```
 
 Por ahora `search_movie` es el único endpoint implementado. Con el tiempo se irán agregando más recursos de la API.
