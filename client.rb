@@ -3,12 +3,13 @@
 require 'faraday'
 require 'json'
 require_relative 'clientdefaults'
+require_relative 'connection'
 
 module SoloMira
   class Client
     include ClientDefaults
     def initialize
-      @conn = connection
+      @conn = Connection.new(BASE_URL)
     end
 
     def search_movie(query)
@@ -18,26 +19,17 @@ module SoloMira
         page_size: PAGE_SIZE
       }
 
-      response = @conn.post do |req|
-        req.body = payload.to_json
-      end
-
+      response = send_req(payload)
       response.body
     end
 
     private
 
-    def connection
-      headers = {
-        'User-Agent' => 'JustWatch client github.com/sebamoralesasd/solomira'
-      }
-      Faraday.new(url: BASE_URL) do |faraday|
-        faraday.adapter Faraday.default_adapter
-        faraday.headers = headers
-      end
+    def send_req(body = nil)
+      @conn.send_req(body)
     end
   end
 end
 
-cli = SoloMira::Client.new
-puts cli.search_movie('Shrek')
+# cli = SoloMira::Client.new
+# puts cli.search_movie('Shrek')
