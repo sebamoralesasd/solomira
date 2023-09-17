@@ -82,7 +82,8 @@ end
 class Watchlist
   def initialize
     @movies = []
-    @watchlist = CSV.read('watchlist.csv').map { |row| row[1] }.drop(1)
+    @watchlist = CSV.read(File.join(File.dirname(__FILE__), 'uploads', 'watchlist.csv'))
+                    .map { |row| row[1] }.drop(1)
   end
 
   def create_movie(query_name, name, providers)
@@ -139,4 +140,3 @@ def streaming
   w.provider
   w.unavailable_movies
 end
-
