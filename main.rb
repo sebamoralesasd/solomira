@@ -82,7 +82,8 @@ end
 class Watchlist
   def initialize
     @movies = []
-    @watchlist = CSV.read(File.join(File.dirname(__FILE__), 'uploads', 'watchlist.csv'))
+    @watchlist = CSV.read(File.join(File.dirname(__FILE__), 'uploads', 'watchlist.csv'),
+                          encoding: 'UTF-8')
                     .map { |row| row[1] }.drop(1)
   end
 
@@ -98,6 +99,8 @@ class Watchlist
     @watchlist.each do |titulo|
       puts "Cargando #{titulo}"
       results = jw.request(titulo)
+      next if results.nil?
+
       create_movie(titulo, results.title, results.offers)
     end
   end

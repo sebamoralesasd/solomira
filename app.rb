@@ -11,8 +11,6 @@ end
 
 post '/process' do
   if params[:file]
-    puts Dir.entries(Dir.pwd).inspect
-
     file_path = File.join(File.dirname(__FILE__), 'uploads', 'watchlist.csv')
 
     Dir.mkdir('uploads') unless Dir.exist?('uploads')

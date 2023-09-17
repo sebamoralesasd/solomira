@@ -20,6 +20,8 @@ class JWQuery
   def request(query)
     search_response = @client.search_movie(query)
     result = JSON.parse(search_response)
+    return if result.nil? || result['items'] == []
+
     JWResponse.new(result)
   end
 end
