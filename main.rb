@@ -7,11 +7,11 @@ require_relative 'movie'
 
 class Group
   def by_provider(movies)
-    lista = movies.flat_map { |mov| mov.providers.map { |prov| [prov, mov] } }
-    inp = Hash.new { |hash, key| hash[key] = [] }
+    provider_movie_pairs = movies.flat_map { |mov| mov.providers.map { |prov| [prov, mov] } }
+    grouped_movies = Hash.new { |hash, key| hash[key] = [] }
 
-    lista.each { |k, v| inp[k] << v }
-    inp.map { |k, v| { 'prov' => k, 'movie' => v.tally } }
+    provider_movie_pairs.each { |k, v| grouped_movies[k] << v }
+    grouped_movies.map { |k, v| { 'prov' => k, 'movie' => v.tally } }
   end
 end
 
@@ -63,20 +63,19 @@ class Presenter
   end
 
   def present(movie)
-    puts "Título: #{movie.query_name}"
+    "Título: #{movie.query_name}"
   end
 
   def available_in(movie)
-    puts "Disponible en: #{@fmt.providers(movie)}"
+    "Disponible en: #{@fmt.providers(movie)}"
   end
 
   def group_present(diccio)
-    diccio.each do |val|
-      puts @fmt.get_provider(val['prov'])
-      val['movie'].each do |mov, count|
-        puts "    -> #{mov.query_name} (#{count})"
-      end
-    end
+    diccio.map do |val|
+      provider = @fmt.get_provider(val['prov'])
+      movies = val['movie'].map { |mov, count| "    -> #{mov.query_name} (#{count})" }.join("\n")
+      "#{provider}\n#{movies}"
+    end.join("\n")
   end
 end
 
@@ -88,7 +87,8 @@ class Watchlist
 
   def create_movie(query_name, name, providers)
     movie = Movie.new(query_name, name, providers)
-    @movies = (@movies + [movie]).sort_by(&:query_name)
+    @movies << movie
+    @movies.sort_by!(&:query_name)
   end
 
   def fetch_movies
@@ -109,12 +109,11 @@ class Watchlist
 
   def movie
     pres = Presenter.new
-    @movies.each do |movie|
-      if movie.available
-        pres.present(movie)
-        pres.available_in(movie)
-      end
+    results = @movies.flat_map do |movie|
+      [pres.present(movie), pres.available_in(movie)] if movie.available
     end
+
+    results.join("\n")
   end
 
   def provider
@@ -141,4 +140,3 @@ def streaming
   w.unavailable_movies
 end
 
-movie
