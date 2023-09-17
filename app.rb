@@ -11,7 +11,11 @@ end
 
 post '/process' do
   if params[:file]
-    file_path = 'uploads/watchlist.csv'
+    puts Dir.entries(Dir.pwd).inspect
+
+    file_path = File.join(File.dirname(__FILE__), 'uploads', 'watchlist.csv')
+
+    Dir.mkdir('uploads') unless Dir.exist?('uploads')
     File.open(file_path, 'wb') do |file|
       file.write(params[:file][:tempfile].read)
     end
