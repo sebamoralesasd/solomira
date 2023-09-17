@@ -3,6 +3,7 @@
 require 'sinatra'
 require 'sinatra/reloader' if development?
 require_relative 'main'
+set :bind, '0.0.0.0'
 
 get '/' do
   erb :upload
