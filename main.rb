@@ -141,5 +141,5 @@ def streaming
   w = Watchlist.new
   w.fetch_movies
   w.provider
-  w.unavailable_movies
+  # w.unavailable_movies
 end
