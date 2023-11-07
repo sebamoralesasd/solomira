@@ -23,5 +23,9 @@ class JWQuery
     return if result.nil? || result['items'] == []
 
     JWResponse.new(result)
+  rescue StandardError => e
+    puts e.message
+    puts e.backtrace if e.backtrace.present?
+    nil
   end
 end
