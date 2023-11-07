@@ -25,7 +25,7 @@ class JWQuery
     JWResponse.new(result)
   rescue StandardError => e
     puts e.message
-    puts e.backtrace if e.backtrace.present?
+    puts e.backtrace unless e.backtrace.nil?
     nil
   end
 end
