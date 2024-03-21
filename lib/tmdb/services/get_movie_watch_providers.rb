@@ -1,13 +1,13 @@
-require_relative '../tmdb-api/lib/swagger_client'
+require_relative '../api-cli/lib/swagger_client'
 
-class GetSearchMovie
+class GetMovieWatchProviders
   def initialize(params)
     @params = params
     @cli = SwaggerClient::DefaultApi.new
   end
 
   def call
-    @cli.search_movie({}, opts)
+    @cli.movie_watch_providers(movie_id, opts)
   end
 
   private
@@ -26,7 +26,11 @@ class GetSearchMovie
     }
   end
 
+  def movie_id
+    @params[:movie_id]
+  end
+
   def query_params
-    { query: @params[:query], language: 'es-AR' }
+    { locale: 'AR' }
   end
 end

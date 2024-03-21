@@ -6,11 +6,7 @@ class Movie
   def initialize(query_name, name, providers)
     @query_name = query_name
     @name = name
-    @providers = get_provider(providers)
+    @providers = providers
     @available = !@providers.empty?
-  end
-
-  def get_provider(providers)
-    providers.map { |prov| prov['package_short_name'] }
   end
 end

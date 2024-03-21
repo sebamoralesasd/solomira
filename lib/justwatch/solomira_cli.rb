@@ -22,7 +22,7 @@ class JWQuery
     result = JSON.parse(search_response)
     return if result.nil? || result['items'] == []
 
-    JWResponse.new(result)
+    result
   rescue StandardError => e
     puts e.message
     puts e.backtrace unless e.backtrace.nil?
