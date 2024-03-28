@@ -27,6 +27,10 @@ class Watchlist
     @watchlist.each do |titulo|
       puts "Cargando #{titulo}"
       raw_results = GetMovie.new(query: titulo).call
+      if raw_results.nil?
+        puts "No se encontró la película #{titulo}"
+        next
+      end
       results = Parser::Context.new(Parser::Tmdb.new).execute(raw_results)
       next if results.nil?
 
@@ -37,7 +41,7 @@ class Watchlist
   def movie
     pres = Presenter.new
     results = @movies.flat_map do |movie|
-      [pres.present(movie), pres.available_in(movie)] if movie.available
+      [pres.present(movie), pres.available_in(movie)] # if movie.available
     end
 
     results.join("\n")

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Parser
   class Context
     def initialize(algo)

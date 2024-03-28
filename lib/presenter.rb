@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Formatter
   PROVIDER_LIST = {
     'hbm' => 'HBO Max',
@@ -17,7 +19,7 @@ class Formatter
   }.freeze
 
   def get_provider(offer)
-    PROVIDER_LIST[offer] || offer
+    offer # PROVIDER_LIST[offer] || offer
   end
 
   def providers(movie)

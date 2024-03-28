@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative '../api-cli/lib/swagger_client'
 
 class GetMovieWatchProviders

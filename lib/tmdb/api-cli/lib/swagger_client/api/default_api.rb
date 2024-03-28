@@ -5809,7 +5809,7 @@ module SwaggerClient
     # @option opts [] :region
     # @option opts [] :year
     # @return [Array<(InlineResponse200, Integer, Hash)>] InlineResponse200 data, response status code and response headers
-    def search_movie_with_http_info(query, opts = {})
+    def search_movie_with_http_info(_query, opts = {})
       @api_client.config.logger.debug 'Calling API: DefaultApi.search_movie ...' if @api_client.config.debugging
       # verify the required parameter 'query' is set
       # if @api_client.config.client_side_validation && query.nil?
@@ -5821,7 +5821,7 @@ module SwaggerClient
 
       # query parameters
       query_params = opts[:query_params] || {}
-            # header parameters
+      # header parameters
       header_params = opts[:header_params] || {}
       # HTTP header 'Accept' (if needed)
       header_params['Accept'] = @api_client.select_header_accept(['application/json'])

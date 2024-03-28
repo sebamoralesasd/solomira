@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'tmdb/services/get_search_movie'
 require_relative 'tmdb/services/get_movie_watch_providers'
 
@@ -8,6 +10,8 @@ class GetMovie
 
   def call
     mov_result = movie
+    return nil if movie.nil?
+
     movie_id = movie[:id]
     prov_result = provider(movie_id)
 
@@ -16,6 +20,8 @@ class GetMovie
 
   def movie
     result = GetSearchMovie.new(@params).call
+
+    return nil if (result[:total_results]).zero?
 
     result[:results].first
   end

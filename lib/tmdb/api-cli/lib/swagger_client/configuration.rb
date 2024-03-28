@@ -135,7 +135,7 @@ module SwaggerClient
       @params_encoding = nil
       @cert_file = nil
       @key_file = nil
-      @debugging = true
+      @debugging = false
       @inject_format = false
       @force_ending_format = false
       @logger = defined?(Rails) ? Rails.logger : Logger.new($stdout)
@@ -164,7 +164,7 @@ module SwaggerClient
 
     def base_path=(base_path)
       # Add leading and trailing slashes to base_path
-      @base_path = "#{base_path}".gsub(%r{/+}, '/')
+      @base_path = base_path.to_s.gsub(%r{/+}, '/')
       @base_path = '' if @base_path == '/'
     end
 

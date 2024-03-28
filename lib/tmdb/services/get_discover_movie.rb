@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative '../tmdb-api/lib/swagger_client'
 
 class GetDiscoverMovie
