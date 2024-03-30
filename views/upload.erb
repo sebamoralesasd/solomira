@@ -1,17 +1,54 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Upload your watchlist.csv</title>
+<meta charset="UTF-8">
+<title>Solomira.</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+  }
+  .container {
+    max-width: 600px;
+    margin: auto;
+  }
+  .description {
+    margin-bottom: 20px;
+  }
+  .file-name {
+    margin-top: 10px;
+    font-style: italic;
+  }
+</style>
 </head>
 <body>
 
-<form action="/process" method="post" enctype="multipart/form-data">
-  <label for="file">Upload your watchlist.csv:</label>
-  <input type="file" name="file">
-  <br><br>
-  <input type="submit" value="Upload and Process">
-</form>
+<div class="container">
+  <div class="description">
+    <h2>Subí tu watchlist de letterboxd.</h2>
+    <p>Subí tu watchlist de tu cuenta de letterboxd. Luego de un rato (depende de qué tan larga es la lista), la página retornará en un txt las películas de la lista con los servicios de streaming en donde estén disponibles.</p>
+  </div>
+
+  <form action="/process" method="post" enctype="multipart/form-data">
+    <label for="file">Upload your watchlist.csv:</label>
+    <input type="file" name="file" id="file" onchange="showFileName()">
+    <div class="file-name" id="file-name"></div>
+    <br><br>
+    <input type="submit" value="Upload and Process">
+  </form>
+</div>
+
+<script>
+  function showFileName() {
+    var fileInput = document.getElementById('file');
+    var fileNameDisplay = document.getElementById('file-name');
+    fileNameDisplay.textContent = 'Selected file: ' + fileInput.files[0].name;
+  }
+</script>
 
 </body>
 </html>
-
